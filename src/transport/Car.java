@@ -1,6 +1,6 @@
 package transport;
 
-public class Car {
+public class Car extends Transport {
 
     public static class Key {
         private final boolean remoteEngineStart;
@@ -46,12 +46,7 @@ public class Car {
             return java.util.Objects.hash(remoteEngineStart, keylessEntry);
         }
     }
-    private final String brand;
-    private final String model;
     private double engineVolume;
-    private String color;
-    private final int year;
-    private final String country;
 
     private String transmission;
     private final String bodyType;
@@ -63,36 +58,11 @@ public class Car {
 
     public Car (String brand, String model, double engineVolume, String color, int year, String country,
                 String transmission, String bodyType, String registrationNumber, int numberOfSeats,
-                boolean isItSummerTires, Key key) {
+                boolean isItSummerTires, Key key, int maxMovementSpeed) {
 
-        if (brand == null || brand.isBlank()) {
-            this.brand = "default";
-        } else {
-            this.brand = brand;
-        }
-
-        if (model == null || model.isBlank()) {
-            this.model = "default";
-        } else {
-            this.model = model;
-        }
-
-        if (country == null || country.isBlank()) {
-            this.country = "default";
-        } else {
-            this.country = country;
-        }
+        super(brand, model, year, country, color, maxMovementSpeed);
 
         setEngineVolume(engineVolume);
-
-        setColor(color);
-
-        if (year <= 0) {
-            this.year = 2000;
-        } else {
-            this.year = year;
-        }
-
         setTransmission(transmission);
 
         if (bodyType == null || bodyType.isBlank()) {
@@ -120,30 +90,22 @@ public class Car {
 
     public Car(String brand, String model, double engineVolume, String color, int year, String country) {
         this (brand, model , engineVolume, color, year, country, "", "", "",
-                0, false, new Key());
+                0, false, new Key(), 0);
     }
 
-    public void changeTiresToSeasonal (int month) {
+    public final void changeTiresToSeasonal (int month) {
         if (month >= 3 && month < 12) {
-            System.out.println("У машины " + this.brand + " установлена летняя резина");
+            System.out.println("У машины " + this.getBrand() + " установлена летняя резина");
             this.isItSummerTires = true;
         } else if (month >= 1 && month < 3 || month == 12) {
-            System.out.println("У машины " + this.brand + " установлена зимняя резина");
+            System.out.println("У машины " + this.getBrand() + " установлена зимняя резина");
             this.isItSummerTires = false;
         } else {
             System.out.println("Такого месяца нет");
         }
     }
 
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setEngineVolume(double engineVolume) {
+    public final void setEngineVolume(double engineVolume) {
         if (engineVolume <= 0) {
             this.engineVolume = 1.5;
         } else {
@@ -151,31 +113,11 @@ public class Car {
         }
     }
 
-    public double getEngineVolume() {
+    public final double getEngineVolume() {
         return engineVolume;
     }
 
-    public void setColor(String color) {
-        if (color == null || color.isBlank()) {
-            this.color = "белый";
-        } else {
-            this.color = color;
-        }
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setTransmission(String transmission) {
+    public final void setTransmission(String transmission) {
         if (transmission == null || transmission.isBlank()) {
             this.transmission = "default";
         } else {
@@ -183,15 +125,15 @@ public class Car {
         }
     }
 
-    public String getTransmission() {
+    public final String getTransmission() {
         return transmission;
     }
 
-    public String getBodyType() {
+    public final String getBodyType() {
         return bodyType;
     }
 
-    public void setRegistrationNumber(String registrationNumber) {
+    public final void setRegistrationNumber(String registrationNumber) {
         if (registrationNumber == null || registrationNumber.isBlank()) {
             this.registrationNumber = "default";
         } else {
@@ -199,54 +141,37 @@ public class Car {
         }
     }
 
-    public String getRegistrationNumber() {
+    public final String getRegistrationNumber() {
         return registrationNumber;
     }
 
-    public int getNumberOfSeats() {
+    public final int getNumberOfSeats() {
         return numberOfSeats;
     }
 
-    public void setIsItSummerTires(boolean isItSummerTires) {
+    public final void setIsItSummerTires(boolean isItSummerTires) {
         this.isItSummerTires = isItSummerTires;
     }
 
-    public boolean getIsItSummerTires() {
+    public final boolean getIsItSummerTires() {
         return isItSummerTires;
     }
 
-    public void setKey (Key key) {
+    public final void setKey (Key key) {
         this.key = key;
     }
 
-    public Key getKey () {
+    public final Key getKey () {
         return this.key;
     }
 
     @Override
     public String toString() {
-        return "Марка - " + brand + "; Модель - " + model + "; Объем двигателя в литрах - " + engineVolume
-                + "; Цвет кузова - " + color + "; Год производства - " + year + "; Страна сборки - " + country
-                + "; Коробка передач - " + transmission + "; Тип кузова - " + bodyType + "; Регистрационный номер - "
-                + registrationNumber + "; Количество мест - " + numberOfSeats + "; Установлена "
-                + (isItSummerTires ? "летняя" : "зимняя") + " резина";
-    }
-
-    @Override
-    public boolean equals (Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (object == null || this.getClass() != object.getClass()) {
-            return false;
-        }
-        Car car = (Car) object;
-        return this.brand.equals(car.brand) && this.model.equals(car.model)
-                && this.year == car.year && this.country.equals(car.country);
-    }
-
-    @Override
-    public int hashCode () {
-        return java.util.Objects.hash(brand, model, year, country);
+        return "Марка - " + getBrand() + "; Модель - " + getModel() + "; Объем двигателя в литрах - " + engineVolume +
+                "; Цвет кузова - " + getColor() + "; Год производства - " + getYear() + "; Страна сборки - " +
+                getCountry() + "; Максимальная скорость передвижения - " + getMaxMovementSpeed() +
+                "; Коробка передач - " + transmission + "; Тип кузова - " + bodyType + "; Регистрационный номер - " +
+                registrationNumber + "; Количество мест - " + numberOfSeats + "; Установлена " +
+                (isItSummerTires ? "летняя" : "зимняя") + " резина";
     }
 }
