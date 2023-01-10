@@ -1,3 +1,4 @@
+import transport.Bus;
 import transport.Car;
 
 public class Main {
@@ -24,5 +25,16 @@ public class Main {
                 "Южная Корея");
 
         System.out.println(hyundai);
+
+        // Часть 3. Наследование
+
+        Bus maz = new Bus("МАЗ", "203", 2015, "Беларусь", "синий", 75);
+        System.out.println(maz);
+
+        Bus lotos = new Bus("Lotos", "206", 2016, "Россия", "", 90);
+        System.out.println(lotos);
+
+        Bus randomBus = new Bus("Random", "Bus");
+        System.out.println(randomBus);
     }
 }
