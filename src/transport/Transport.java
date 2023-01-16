@@ -1,14 +1,14 @@
 package transport;
 
-public abstract class Transport {
+import drivers.Driver;
+
+public abstract class Transport <T extends Driver> implements Competing {
     private final String brand;
     private final String model;
-    private final int year;
-    private final String country;
-    private String color;
-    private int maxMovementSpeed;
+    private double engineVolume;
+    private T driver;
 
-    public Transport(String brand, String model, int year, String country, String color, int maxMovementSpeed) {
+    public Transport(String brand, String model, double engineVolume, T driver) {
         if (brand == null || brand.isBlank()) {
             this.brand = "default";
         } else {
@@ -21,20 +21,9 @@ public abstract class Transport {
             this.model = model;
         }
 
-        if (year <= 0) {
-            this.year = 2000;
-        } else {
-            this.year = year;
-        }
+        setEngineVolume(engineVolume);
 
-        if (country == null || country.isBlank()) {
-            this.country = "default";
-        } else {
-            this.country = country;
-        }
-
-        setColor(color);
-        setMaxMovementSpeed(maxMovementSpeed);
+        setDriver(driver);
     }
 
     public final String getBrand() {
@@ -45,42 +34,33 @@ public abstract class Transport {
         return model;
     }
 
-    public final int getYear() {
-        return year;
-    }
-
-    public final String getCountry() {
-        return country;
-    }
-
-    public final void setColor(String color) {
-        if (color == null || color.isBlank()) {
-            this.color = "белый";
+    public final void setEngineVolume(double engineVolume) {
+        if (engineVolume <= 0) {
+            this.engineVolume = 1.5;
         } else {
-            this.color = color;
+            this.engineVolume = engineVolume;
         }
     }
 
-    public final String getColor() {
-        return color;
+    public final double getEngineVolume () {
+        return this.engineVolume;
     }
 
-    public final void setMaxMovementSpeed (int speed) {
-        if (speed <= 0) {
-            this.maxMovementSpeed = 60;
-        } else {
-            this.maxMovementSpeed = speed;
-        }
+    public final void setDriver(T driver) {
+        this.driver = driver;
     }
 
-    public final int getMaxMovementSpeed () {
-        return this.maxMovementSpeed;
+    public final T getDriver() {
+        return this.driver;
     }
+
+    public abstract void startMoving();
+
+    public abstract void finishMoving();
 
     @Override
     public String toString() {
-        return "Марка - " + brand + "; Модель - " + model + "; Год производства - " + year + "; Страна сборки - " +
-                country + "; Цвет кузова - " + color + "; Максимальная скорость передвижения - " + maxMovementSpeed;
+        return "Марка - " + brand + "; Модель - " + model + "; Объем двигателя - " + engineVolume;
     }
 
     @Override
@@ -91,13 +71,12 @@ public abstract class Transport {
         if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
-        Transport transport = (Transport) o;
-        return this.brand.equals(transport.brand) && this.model.equals(transport.model) && this.year == transport.year &&
-                this.country.equals(transport.country);
+        Transport<?> transport = (Transport<?>) o;
+        return this.brand.equals(transport.brand) && this.model.equals(transport.model);
     }
 
     @Override
     public int hashCode () {
-        return java.util.Objects.hash(brand, model, year, country);
+        return java.util.Objects.hash(brand, model);
     }
 }
