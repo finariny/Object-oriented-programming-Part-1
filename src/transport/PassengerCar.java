@@ -4,8 +4,48 @@ import drivers.DriverCategoryB;
 
 public class PassengerCar extends Transport <DriverCategoryB> {
 
-    public PassengerCar (String brand, String model, double engineVolume, DriverCategoryB driverCategoryB) {
+    private BodyType bodyType;
+
+    public enum BodyType {
+        SEDAN("седан"),
+        HATCHBACK("хетчбек"),
+        COUPE("купе"),
+        UNIVERSAL("универсал"),
+        SUV("внедорожник"),
+        CROSSOVER("кроссовер"),
+        PICKUP("пикап"),
+        VAN("фургон"),
+        MINIVAN("минивэн");
+
+        private final String typeInRussian;
+
+        BodyType(String typeInRussian) {
+            this.typeInRussian = typeInRussian;
+        }
+
+        public final String getTypeInRussian() {
+            return this.typeInRussian;
+        }
+
+        @Override
+        public String toString() {
+            return name() + ": " + typeInRussian;
+        }
+    }
+
+    public PassengerCar (String brand, String model, double engineVolume, DriverCategoryB driverCategoryB, BodyType bodyType) {
         super(brand, model, engineVolume, driverCategoryB);
+        setBodyType(bodyType);
+    }
+
+    public final void setBodyType(BodyType bodyType) {
+        if (bodyType != null) {
+            this.bodyType = bodyType;
+        }
+    }
+
+    public final BodyType getBodyType() {
+        return this.bodyType;
     }
 
     @Override
@@ -31,5 +71,14 @@ public class PassengerCar extends Transport <DriverCategoryB> {
     @Override
     public void maximumSpeed (int speed) {
         System.out.println("Максимальная скорость у автомобиля " + getBrand() + getModel() + " - " + speed);
+    }
+
+    @Override
+    public void printType() {
+        if (bodyType != null) {
+            System.out.println(bodyType);
+        } else {
+            System.out.println("Данных по транспортному средству недостаточно");
+        }
     }
 }

@@ -4,8 +4,54 @@ import drivers.DriverCategoryC;
 
 public class FreightCar extends Transport <DriverCategoryC> {
 
-    public FreightCar (String brand, String model, double engineVolume, DriverCategoryC driverCategoryC) {
+    private LoadType loadType;
+
+    public enum LoadType {
+        N1(null, 3.5F),
+        N2(3.5F, 12F),
+        N3(12F, null);
+
+        private final Float bottomBound;
+        private final Float upperBound;
+
+        LoadType(Float bottomBound, Float upperBound) {
+            this.bottomBound = bottomBound;
+            this.upperBound = upperBound;
+        }
+
+        public final Float getBottomBound() {
+            return this.bottomBound;
+        }
+
+        public final Float getUpperBound() {
+            return this.upperBound;
+        }
+
+        @Override
+        public String toString() {
+            if (bottomBound == null) {
+                return name() + ": до " + upperBound + " тонн";
+            }
+            if (upperBound == null) {
+                return name() + ": свыше " + bottomBound + " тонн";
+            }
+            return name() + ": от " + bottomBound + " до " + upperBound + " тонн";
+        }
+    }
+
+    public FreightCar (String brand, String model, double engineVolume, DriverCategoryC driverCategoryC, LoadType loadType) {
         super(brand, model, engineVolume, driverCategoryC);
+        setLoadType(loadType);
+    }
+
+    public final void setLoadType(LoadType loadType) {
+        if (loadType != null) {
+            this.loadType = loadType;
+        }
+    }
+
+    public final LoadType getLoadType() {
+        return this.loadType;
     }
 
     @Override
@@ -31,5 +77,14 @@ public class FreightCar extends Transport <DriverCategoryC> {
     @Override
     public void maximumSpeed (int speed) {
         System.out.println("Максимальная скорость у грузовика " + getBrand() + getModel() + " - " + speed);
+    }
+
+    @Override
+    public void printType() {
+        if (loadType != null) {
+            System.out.println(loadType);
+        } else {
+            System.out.println("Данных по транспортному средству недостаточно");
+        }
     }
 }

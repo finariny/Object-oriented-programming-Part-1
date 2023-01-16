@@ -4,8 +4,56 @@ import drivers.DriverCategoryD;
 
 public class Bus extends Transport <DriverCategoryD> {
 
-    public Bus(String brand, String model, double engineVolume, DriverCategoryD driverCategoryD) {
+    private CapacityType capacityType;
+
+    public enum CapacityType {
+        ESPECIALLY_SMALL(null, 10),
+        SMALL(null, 25),
+        AVERAGE(40, 50),
+        BIG(60, 80),
+        ESPECIALLY_BIG(100, 120);
+
+        private final Integer minimumNumberOfSeats;
+        private final Integer maximumNumberOfSeats;
+
+        CapacityType(Integer minimumNumberOfSeats, Integer maximumNumberOfSeats){
+            this.minimumNumberOfSeats = minimumNumberOfSeats;
+            this.maximumNumberOfSeats = maximumNumberOfSeats;
+        }
+
+        public final Integer getMinimumNumberOfSeats() {
+            return this.minimumNumberOfSeats;
+        }
+
+        public final Integer getMaximumNumberOfSeats() {
+            return this.maximumNumberOfSeats;
+        }
+
+        @Override
+        public String toString() {
+            if (minimumNumberOfSeats == null) {
+                return name() + ": до " + maximumNumberOfSeats + " мест";
+            }
+            if (maximumNumberOfSeats == null) {
+                return name() + ": свыше " + minimumNumberOfSeats + " мест";
+            }
+            return name() + ": " + minimumNumberOfSeats + " - " + maximumNumberOfSeats + " мест";
+        }
+    }
+
+    public Bus(String brand, String model, double engineVolume, DriverCategoryD driverCategoryD, CapacityType capacityType) {
         super(brand, model, engineVolume, driverCategoryD);
+        setCapacityType(capacityType);
+    }
+
+    public final void setCapacityType(CapacityType capacityType) {
+        if (capacityType != null) {
+            this.capacityType = capacityType;
+        }
+    }
+
+    public final CapacityType getCapacityType() {
+        return this.capacityType;
     }
 
     @Override
@@ -31,5 +79,14 @@ public class Bus extends Transport <DriverCategoryD> {
     @Override
     public void maximumSpeed (int speed) {
         System.out.println("Максимальная скорость у автобуса " + getBrand() + getModel() + " - " + speed);
+    }
+
+    @Override
+    public void printType() {
+        if (capacityType != null) {
+            System.out.println(capacityType);
+        } else {
+            System.out.println("Данных по транспортному средству недостаточно");
+        }
     }
 }
