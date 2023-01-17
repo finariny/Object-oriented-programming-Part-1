@@ -60,6 +60,16 @@ public abstract class Transport <T extends Driver> implements Competing {
 
     public abstract void printType();
 
+    protected void checkDriverLicense() throws DriverLicenseNotSpecifiedException {
+        if (!getDriver().isHavingADriversLicense()) {
+            throw new DriverLicenseNotSpecifiedException("Необходимо указать наличие прав!");
+        } else {
+            System.out.println("С правами всё в порядке!");
+        }
+    }
+
+    public abstract void passDiagnostics();
+
     @Override
     public String toString() {
         return "Марка - " + brand + "; Модель - " + model + "; Объем двигателя - " + engineVolume;

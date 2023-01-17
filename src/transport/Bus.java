@@ -89,4 +89,9 @@ public class Bus extends Transport <DriverCategoryD> {
             System.out.println("Данных по транспортному средству недостаточно");
         }
     }
+
+    @Override
+    public void passDiagnostics() {
+        System.out.println("Автобусы не могут проходить диагностику!");
+    }
 }

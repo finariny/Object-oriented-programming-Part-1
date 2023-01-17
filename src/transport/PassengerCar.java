@@ -81,4 +81,14 @@ public class PassengerCar extends Transport <DriverCategoryB> {
             System.out.println("Данных по транспортному средству недостаточно");
         }
     }
+
+    @Override
+    public void passDiagnostics() {
+        try {
+            this.checkDriverLicense();
+        }
+        catch (DriverLicenseNotSpecifiedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
