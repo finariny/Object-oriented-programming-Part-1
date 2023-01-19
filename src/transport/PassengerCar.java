@@ -84,11 +84,6 @@ public class PassengerCar extends Transport <DriverCategoryB> {
 
     @Override
     public void passDiagnostics() {
-        try {
-            this.checkDriverLicense();
-        }
-        catch (DriverLicenseNotSpecifiedException e) {
-            System.out.println(e.getMessage());
-        }
+        System.out.println("Легковой автомобиль " + getBrand() + " " + getModel() + " проходит диагностику");
     }
 }

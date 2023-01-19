@@ -90,11 +90,6 @@ public class FreightCar extends Transport <DriverCategoryC> {
 
     @Override
     public void passDiagnostics() {
-        try {
-            this.checkDriverLicense();
-        }
-        catch (DriverLicenseNotSpecifiedException e) {
-            System.out.println(e.getMessage());
-        }
+        System.out.println("Грузовой автомобиль " + getBrand() + " " + getModel() + " проходит диагностику");
     }
 }
