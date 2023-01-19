@@ -87,4 +87,9 @@ public class FreightCar extends Transport <DriverCategoryC> {
             System.out.println("Данных по транспортному средству недостаточно");
         }
     }
+
+    @Override
+    public void passDiagnostics() {
+        System.out.println("Грузовой автомобиль " + getBrand() + " " + getModel() + " проходит диагностику");
+    }
 }

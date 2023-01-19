@@ -24,6 +24,13 @@ public abstract class Transport <T extends Driver> implements Competing {
         setEngineVolume(engineVolume);
 
         setDriver(driver);
+
+        try {
+            checkDriverLicense();
+        }
+        catch (DriverLicenseNotSpecifiedException e) {
+            System.out.println("У водителя " + this.brand + " " + this.model + " " + e.getMessage());
+        }
     }
 
     public final String getBrand() {
@@ -59,6 +66,16 @@ public abstract class Transport <T extends Driver> implements Competing {
     public abstract void finishMoving();
 
     public abstract void printType();
+
+    protected void checkDriverLicense() throws DriverLicenseNotSpecifiedException {
+        if (!this.driver.isHavingADriversLicense()) {
+            throw new DriverLicenseNotSpecifiedException("необходимо указать наличие прав!");
+        }
+    }
+
+    public void passDiagnostics() {
+
+    }
 
     @Override
     public String toString() {
