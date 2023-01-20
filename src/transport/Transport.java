@@ -2,11 +2,16 @@ package transport;
 
 import drivers.Driver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Transport <T extends Driver> implements Competing {
     private final String brand;
     private final String model;
     private double engineVolume;
     private T driver;
+
+    private final List<Mechanic> listOfAllMechanics = new ArrayList<>();
 
     public Transport(String brand, String model, double engineVolume, T driver) {
         if (brand == null || brand.isBlank()) {
@@ -23,13 +28,12 @@ public abstract class Transport <T extends Driver> implements Competing {
 
         setEngineVolume(engineVolume);
 
-        setDriver(driver);
+        this.driver = driver;
 
         try {
             checkDriverLicense();
-        }
-        catch (DriverLicenseNotSpecifiedException e) {
-            System.out.println("У водителя " + this.brand + " " + this.model + " " + e.getMessage());
+        } catch (DriverLicenseNotSpecifiedException e) {
+            System.out.println("У водителя " + this.driver.getFullName() + " " + e.getMessage());
         }
     }
 
@@ -61,6 +65,14 @@ public abstract class Transport <T extends Driver> implements Competing {
         return this.driver;
     }
 
+    public final void addMechanic(Mechanic mechanic) {
+        this.listOfAllMechanics.add(mechanic);
+    }
+
+    public final List<Mechanic> getListOfAllMechanics() {
+        return this.listOfAllMechanics;
+    }
+
     public abstract void startMoving();
 
     public abstract void finishMoving();
@@ -68,7 +80,7 @@ public abstract class Transport <T extends Driver> implements Competing {
     public abstract void printType();
 
     protected void checkDriverLicense() throws DriverLicenseNotSpecifiedException {
-        if (!this.driver.isHavingADriversLicense()) {
+        if (!this.getDriver().isHavingADriversLicense()) {
             throw new DriverLicenseNotSpecifiedException("необходимо указать наличие прав!");
         }
     }
