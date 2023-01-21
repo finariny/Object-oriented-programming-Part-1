@@ -11,7 +11,7 @@ public abstract class Transport <T extends Driver> implements Competing {
     private double engineVolume;
     private T driver;
 
-    private final List<Mechanic> listOfAllMechanics = new ArrayList<>();
+    private final List<Mechanic<?>> listOfAllMechanics = new ArrayList<>();
 
     public Transport(String brand, String model, double engineVolume, T driver) {
         if (brand == null || brand.isBlank()) {
@@ -65,11 +65,11 @@ public abstract class Transport <T extends Driver> implements Competing {
         return this.driver;
     }
 
-    public final void addMechanic(Mechanic mechanic) {
+    public final void addMechanic(Mechanic<?> mechanic) {
         this.listOfAllMechanics.add(mechanic);
     }
 
-    public final List<Mechanic> getListOfAllMechanics() {
+    public final List<Mechanic<?>> getListOfAllMechanics() {
         return this.listOfAllMechanics;
     }
 

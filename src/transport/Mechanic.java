@@ -1,6 +1,6 @@
 package transport;
 
-public class Mechanic {
+public class Mechanic <T extends Transport<?>>{
     private final String fullName;
     private String company;
 
@@ -30,12 +30,13 @@ public class Mechanic {
         return this.company;
     }
 
-    public final void carryOutMaintenance() {
-        System.out.println("Механик " + getFullName() + " проводит техобслуживание машины");
+    public final void carryOutMaintenance(T transport) {
+        System.out.println("Механик " + getFullName() + " проводит техобслуживание машины " + transport.getBrand() +
+                " " + transport.getModel());
     }
 
-    public final void fixTheCar() {
-        System.out.println("Механик " + getFullName() + " чинит машину");
+    public final void fixTheCar(T transport) {
+        System.out.println("Механик " + getFullName() + " чинит машину " + transport.getBrand() + " " + transport.getModel());
     }
 
     @Override
@@ -51,7 +52,7 @@ public class Mechanic {
         if (o == null || this.getClass() == o.getClass()) {
             return false;
         }
-        Mechanic mechanic = (Mechanic) o;
+        Mechanic<?> mechanic = (Mechanic<?>) o;
         return this.fullName.equals(mechanic.fullName) && this.company.equals(mechanic.company);
     }
 

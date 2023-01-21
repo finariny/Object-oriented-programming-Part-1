@@ -95,12 +95,13 @@ public class Main {
         System.out.println("Список всех автомобилей, которые участвуют в автогонке - " + listOfAllCars);
         System.out.println("Список всех водителей - " + listOfAllDrivers);
 
-        Mechanic mechanic1 = new Mechanic("Нестеров Владимир Игнатьевич", "");
-        Mechanic mechanic2 = new Mechanic("Сапожников Антон Валерьевич", "Механик");
-        Mechanic mechanic3 = new Mechanic("Стародубов Николай Александрович", "");
+        Mechanic<Transport<?>> mechanic1 = new Mechanic<>("Нестеров Владимир Игнатьевич", "");
+        Mechanic<FreightCar> mechanic2 = new Mechanic<>("Сапожников Антон Валерьевич", "Механик");
+        Mechanic<FreightCar> mechanic3 = new Mechanic<>("Стародубов Николай Александрович", "");
 
         lada.addMechanic(mechanic1);
-        lada.addMechanic(mechanic2);
+        lada.addMechanic(mechanic2); // у этого механика не получится вызвать методы для lada
+        mechanic1.carryOutMaintenance(lada);
         printDriverAndMechanicOfTheCar(lada);
 
         gaz.addMechanic(mechanic1);
