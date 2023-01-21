@@ -96,11 +96,11 @@ public class Main {
         System.out.println("Список всех водителей - " + listOfAllDrivers);
 
         Mechanic<Transport<?>> mechanic1 = new Mechanic<>("Нестеров Владимир Игнатьевич", "");
-        Mechanic<FreightCar> mechanic2 = new Mechanic<>("Сапожников Антон Валерьевич", "Механик");
+        Mechanic<PassengerCar> mechanic2 = new Mechanic<>("Сапожников Антон Валерьевич", "Механик");
         Mechanic<FreightCar> mechanic3 = new Mechanic<>("Стародубов Николай Александрович", "");
 
         lada.addMechanic(mechanic1);
-        lada.addMechanic(mechanic2); // у этого механика не получится вызвать методы для lada
+        lada.addMechanic(mechanic2);
         mechanic1.carryOutMaintenance(lada);
         printDriverAndMechanicOfTheCar(lada);
 
