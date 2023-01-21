@@ -1,12 +1,17 @@
 import drivers.DriverCategoryB;
 import drivers.DriverCategoryC;
 import drivers.DriverCategoryD;
-import transport.Bus;
-import transport.FreightCar;
-import transport.PassengerCar;
-import transport.Transport;
+import transport.*;
+import drivers.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
+
+    public static List<Transport<?>> listOfAllCars = new ArrayList<>();
+    public static List<Driver> listOfAllDrivers = new ArrayList<>();
+
     public static void main(String[] args) {
 
         // Легковые автомобили
@@ -14,88 +19,107 @@ public class Main {
         PassengerCar lada = new PassengerCar("Lada", "Granta", 1.7,
                 new DriverCategoryB("Некифоров Павел Антонович", false, 4), null);
 
-//        printDriverAndCar(lada);
-//        lada.printType();
-        lada.passDiagnostics();
+        listOfAllCars.add(lada);
+        listOfAllDrivers.add(lada.getDriver());
 
         PassengerCar audi = new PassengerCar("Audi", "A8 50 L TDI quattro", 3.0,
                 new DriverCategoryB("Дементьев Николай Сергеевич", true, 3), PassengerCar.BodyType.SEDAN);
 
-//        printDriverAndCar(audi);
-//        audi.printType();
-        audi.passDiagnostics();
+        listOfAllCars.add(audi);
+        listOfAllDrivers.add(audi.getDriver());
 
         PassengerCar bmw = new PassengerCar("BMW", "Z8", 3.0,
                 new DriverCategoryB("Романов Дмитрий Николаевич", true, 7), PassengerCar.BodyType.COUPE);
 
-//        printDriverAndCar(bmw);
-//        bmw.printType();
+        listOfAllCars.add(bmw);
+        listOfAllDrivers.add(bmw.getDriver());
 
         PassengerCar kia = new PassengerCar("Kia", "Sportage 4-го поколения", 2.4,
                 new DriverCategoryB("Андреев Леонид Андреевич", true, 6), PassengerCar.BodyType.SUV);
 
-//        printDriverAndCar(kia);
-//        kia.printType();
+        listOfAllCars.add(kia);
+        listOfAllDrivers.add(kia.getDriver());
 
         // Грузовые автомобили
 
         FreightCar kamAZ = new FreightCar("КамАЗ", "5320", 10.8,
                 new DriverCategoryC("Головков Максим Александрович", false, -8), FreightCar.LoadType.N2);
 
-//        printDriverAndCar(kamAZ);
-//        kamAZ.printType();
-        kamAZ.passDiagnostics();
+        listOfAllCars.add(kamAZ);
+        listOfAllDrivers.add(kamAZ.getDriver());
 
         FreightCar gaz = new FreightCar("ГАЗ", "53", 3.5,
                 new DriverCategoryC("Тукмачёв Сергей Эдуардович", true, 4), FreightCar.LoadType.N1);
 
-//        printDriverAndCar(gaz);
-//        gaz.printType();
-        gaz.passDiagnostics();
+        listOfAllCars.add(gaz);
+        listOfAllDrivers.add(gaz.getDriver());
 
         FreightCar zil = new FreightCar("ЗиЛ", "130", 5.6,
                 new DriverCategoryC("Максимов Егор Андреевич", true, 7), FreightCar.LoadType.N2);
 
-//        printDriverAndCar(zil);
-//        zil.printType();
+        listOfAllCars.add(zil);
+        listOfAllDrivers.add(zil.getDriver());
 
         FreightCar ural = new FreightCar("Урал", "4230", 14.9,
                 new DriverCategoryC("Комаров Руслан Александрович", true, 9), FreightCar.LoadType.N2);
 
-//        printDriverAndCar(ural);
-//        ural.printType();
+        listOfAllCars.add(ural);
+        listOfAllDrivers.add(ural.getDriver());
 
         // Автобусы
 
         Bus maz = new Bus("МАЗ", "203", 6.3,
                 new DriverCategoryD("Рештников Антон Павлович", false, 5), Bus.CapacityType.ESPECIALLY_BIG);
 
-//        printDriverAndCar(maz);
-//        maz.printType();
-        maz.passDiagnostics();
+        listOfAllCars.add(maz);
+        listOfAllDrivers.add(maz.getDriver());
 
         Bus lotos = new Bus("Lotos", "206", 5.3,
                 new DriverCategoryD("Кузьмин Олег Владимирович", true, 10), Bus.CapacityType.BIG);
 
-//        printDriverAndCar(lotos);
-//        lotos.printType();
-        lotos.passDiagnostics();
+        listOfAllCars.add(lotos);
+        listOfAllDrivers.add(lotos.getDriver());
 
         Bus marz = new Bus("МАРЗ", "5277", 11.1,
                 new DriverCategoryD("Сергеев Павел Евгеньевич", true, 8), Bus.CapacityType.ESPECIALLY_BIG);
 
-//        printDriverAndCar(marz);
-//        marz.printType();
+        listOfAllCars.add(marz);
+        listOfAllDrivers.add(marz.getDriver());
 
         Bus nefaz = new Bus("НЕФАЗ", "5299", 6.7,
                 new DriverCategoryD("Суслопаров Алексей Юрьевич", true, -11), Bus.CapacityType.AVERAGE);
 
-//        printDriverAndCar(nefaz);
-//        nefaz.printType();
+        listOfAllCars.add(nefaz);
+        listOfAllDrivers.add(nefaz.getDriver());
+
+        System.out.println("Список всех автомобилей, которые участвуют в автогонке - " + listOfAllCars);
+        System.out.println("Список всех водителей - " + listOfAllDrivers);
+
+        Mechanic<Transport<?>> mechanic1 = new Mechanic<>("Нестеров Владимир Игнатьевич", "");
+        Mechanic<PassengerCar> mechanic2 = new Mechanic<>("Сапожников Антон Валерьевич", "Механик");
+        Mechanic<FreightCar> mechanic3 = new Mechanic<>("Стародубов Николай Александрович", "");
+
+        lada.addMechanic(mechanic1);
+        lada.addMechanic(mechanic2);
+        mechanic1.carryOutMaintenance(lada);
+        printDriverAndMechanicOfTheCar(lada);
+
+        gaz.addMechanic(mechanic1);
+        gaz.addMechanic(mechanic3);
+        printDriverAndMechanicOfTheCar(gaz);
     }
 
     public static void printDriverAndCar(Transport<?> transport) {
         System.out.println("Водитель " + transport.getDriver().getFullName() + " управляет " +
                 transport.getBrand() + " " + transport.getModel() + " и будет участвовать в заезде");
+    }
+
+    public static void printDriverAndMechanicOfTheCar(Transport<?> transport) {
+        if (transport.getListOfAllMechanics().isEmpty()) {
+            throw new NullPointerException("Необходимо добавить механика!");
+        } else {
+            System.out.println("Машина - " + transport.getBrand() + " " + transport.getModel() + "; Ф. И. О. водителя - " +
+                    transport.getDriver().getFullName() + "; Список механиков машины - " + transport.getListOfAllMechanics());
+        }
     }
 }
