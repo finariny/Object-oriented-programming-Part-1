@@ -2,8 +2,8 @@ package transport;
 
 import drivers.Driver;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class Transport <T extends Driver> implements Competing {
     private final String brand;
@@ -11,7 +11,7 @@ public abstract class Transport <T extends Driver> implements Competing {
     private double engineVolume;
     private T driver;
 
-    private final List<Mechanic<?>> listOfAllMechanics = new ArrayList<>();
+    private final Set<Mechanic<?>> listOfAllMechanics = new HashSet<>();
 
     public Transport(String brand, String model, double engineVolume, T driver) {
         if (brand == null || brand.isBlank()) {
@@ -69,7 +69,7 @@ public abstract class Transport <T extends Driver> implements Competing {
         this.listOfAllMechanics.add(mechanic);
     }
 
-    public final List<Mechanic<?>> getListOfAllMechanics() {
+    public final Set<Mechanic<?>> getListOfAllMechanics() {
         return this.listOfAllMechanics;
     }
 
