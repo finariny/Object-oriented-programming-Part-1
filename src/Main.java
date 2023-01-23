@@ -4,15 +4,12 @@ import drivers.DriverCategoryD;
 import transport.*;
 import drivers.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
 
     public static List<Transport<?>> listOfAllCars = new ArrayList<>();
-    public static List<Driver> listOfAllDrivers = new ArrayList<>();
+    public static Set<Driver> listOfAllDrivers = new HashSet<>();
 
     public static Map<Transport<?>, Mechanic<?>> transportAndMechanic = new HashMap<>();
 
@@ -95,22 +92,15 @@ public class Main {
 
         listOfAllCars.add(nefaz);
         listOfAllDrivers.add(nefaz.getDriver());
+        listOfAllDrivers.add(nefaz.getDriver());
 
         Mechanic<Transport<?>> mechanic1 = new Mechanic<>("Нестеров Владимир Игнатьевич", "");
         Mechanic<PassengerCar> mechanic2 = new Mechanic<>("Сапожников Антон Валерьевич", "Механик");
         Mechanic<FreightCar> mechanic3 = new Mechanic<>("Стародубов Николай Александрович", "");
 
-        lada.addMechanic(mechanic1);
-        lada.addMechanic(mechanic1);
-        lada.addMechanic(mechanic2);
-        System.out.println(lada.getListOfAllMechanics());
-
-        transportAndMechanic.put(kia, mechanic2);
-        transportAndMechanic.put(kamAZ, mechanic3);
-        transportAndMechanic.put(lotos, mechanic1);
-        for(Map.Entry<Transport<?>, Mechanic<?>> transport: transportAndMechanic.entrySet()) {
-            System.out.println("Машина: " + transport.getKey().getBrand() + " " + transport.getKey().getModel() +
-                    "; Механик: " + transport.getValue().getFullName());
+        Iterator<Driver> driverIterator = listOfAllDrivers.iterator();
+        while (driverIterator.hasNext()) {
+            System.out.println(driverIterator.next());
         }
     }
 
